@@ -16,7 +16,13 @@ Internally, the module maintains:
 - A counter `count` to track the current number of entries.
 
 ---
-
+## Mechanism
+<img width="473" alt="Image" src="https://github.com/user-attachments/assets/7176db3f-7203-4450-9e62-6b490d237edf" />
+- To design a FIFO (First-In First-Out) buffer, we can imagine memory elements arranged in a circular structure with two pointers: a write pointer and a read pointer. Initially, both pointers start at the beginning of the circle.
+- We increment the write pointer step by step to write data into the buffer. Once a cell in the circular buffer has been written to, we begin incrementing the read pointer to read the data out. Repeating this process around the entire circle allows us to retrieve the output data in the exact same order as it was written.
+- The full flag indicates the state where the write pointer has completed one full cycle and meets the read pointer in the second round. In other words, the write pointer overlaps the read pointer when the write cycle is one loop ahead. This means a memory location is about to be overwritten before the previous data has been read — at this point, no more data is allowed to be written.
+- The empty flag indicates the state when the read pointer overlaps the write pointer while they are still in the same cycle. This means a read is being attempted before any new data has been written, which leads to data being considered lost or invalid.
+---
 ## Port Description
 
 | **Port**     | **Direction** | **Width**                  | **Description**                                                            |
